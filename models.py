@@ -50,3 +50,34 @@ class Post(db.Model):
                     nullable=False)
 
     author = db.relationship('User', backref='posts')
+    tag = db.relationship('Tag', secondary='posttags', backref='posts')
+
+class Tag(db.Model):
+    __tablename__ = 'tags'
+
+    id = db.Column(db.Integer,
+                   primary_key=True,
+                   autoincrement=True)
+
+    name = db.Column(db.String(50),
+                    nullable=False,
+                    unique=True)
+
+    
+                 
+
+class PostTag(db.Model):
+    __tablename__ = 'posttags'
+
+    id = db.Column(db.Integer,
+                    primary_key=True,
+                    autoincrement=True)
+
+    post_id = db.Column(db.Integer,
+                    db.ForeignKey('posts.id'),
+                    nullable=False)
+
+    tag_id = db.Column(db.Integer,
+                    db.ForeignKey('tags.id'),
+                    nullable=False)
+    
