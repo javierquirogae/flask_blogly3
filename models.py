@@ -50,7 +50,7 @@ class Post(db.Model):
                     nullable=False)
 
     author = db.relationship('User', backref='posts')
-    tag = db.relationship('Tag', secondary='posttags', backref='posts')
+   
 
 class Tag(db.Model):
     __tablename__ = 'tags'
@@ -62,7 +62,12 @@ class Tag(db.Model):
     name = db.Column(db.String(50),
                     nullable=False,
                     unique=True)
-
+    posts = db.relationship(
+        'Post',
+        secondary="posttags",
+        # cascade="all,delete",
+        backref="tags",
+    )
     
                  
 

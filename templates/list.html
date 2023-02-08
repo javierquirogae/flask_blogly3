@@ -20,5 +20,15 @@
         <form action="/form">
             <button type="submit" class="btn btn-success">ADD USER</button>
         </form>
+        <H2>Tags</H2>
+        <ul>
+            {% for tag in tags %}
+            <li><a href="/tag/{{ tag.id }}">{{ tag.name }}</a></li>
+            {% endfor %}
+        </ul>
+      
+        <form action="/tag_form">
+            <button type="submit" class="btn btn-primary">ADD TAG</button>
+        </form>
     </body>
 </html>

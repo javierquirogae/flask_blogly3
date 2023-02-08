@@ -14,11 +14,18 @@
         <form method="POST">
             <p>Title: <input name="title" ></p>
             <p>Content:  <textarea name="content" rows="5" cols="100"></textarea></p>
+            <ul>
+                {% for tag in tags %}
+                
+                <input type="checkbox"  name="tags" value="{{ tag.id }}" id="tag_{{ tag.id }}">
+                <label for="vehicle1" for="tag_{{ tag.id }}">{{ tag.name }}</label><br>
+                {% endfor %}
+            </ul>
      
-            <button class="btn btn-success">Save</button>
+        <button class="btn btn-success">Save</button>
 
-          </form>
-          <form action="/{{ user.id }}">
+        </form>
+        <form action="/{{ user.id }}">
             <button class="btn btn-danger">Cancel</button>
         </form>
     </body>

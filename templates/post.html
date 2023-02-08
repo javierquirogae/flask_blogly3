@@ -19,6 +19,17 @@
                     <h2>{{ p.title }}</h2>
                     <p>{{ p.content }}</p>
                     <a href="/{{ user.id }}">by {{ user.fn() }}</a><br>
+                    {% if p.tags %}
+                    <p>
+                        <br>
+                    <b>Tags:</b>
+                    {% for tag in p.tags %}
+                    <span class="badge badge-primary">
+                        <a href="/tag/{{ tag.id }}">{{ tag.name }}</span></a>
+                    </span>
+                    {% endfor %}
+                    </p>
+                    {% endif %}
                 </div>
                 <div class="col">
                     <form action="/{{p.id}}/edit_post">
