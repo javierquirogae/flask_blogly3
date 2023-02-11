@@ -18,7 +18,7 @@
                 {% for tag in tags %}
                 
                 <input type="checkbox"  name="tags" value="{{ tag.id }}" id="tag_{{ tag.id }}">
-                <label for="vehicle1" for="tag_{{ tag.id }}">{{ tag.name }}</label><br>
+                <label  for="tag_{{ tag.id }}">{{ tag.name }}</label><br>
                 {% endfor %}
             </ul>
      

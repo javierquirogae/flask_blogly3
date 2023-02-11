@@ -14,6 +14,25 @@
         <form method="POST">
             <p>Title: <input name="title" value="{{post.title}}"></p>
             <p>Content:  <textarea name="content" rows="5" cols="100">{{post.content}}</textarea></p>
+            <ul>
+                {% if post.tags %}
+                {% for tag in post.tags %}
+                
+                    <input type="checkbox"  name="tags" value="{{ tag.id }}" id="tag_{{ tag.id }}" checked>
+                    <label  for="tag_{{ tag.id }}">{{ tag.name }}</label><br>
+                {% endfor %}
+                {% endif %}
+
+                
+                {% for tag in tags %}
+                {% if tag not in post.tags  %}
+                    <input type="checkbox"  name="tags" value="{{ tag.id }}" id="tag_{{ tag.id }}" >
+                    <label  for="tag_{{ tag.id }}">{{ tag.name }}</label><br>
+                {% endif %}
+                {% endfor %}
+                
+                
+            </ul>
            
             <button class="btn btn-success">Save</button>
           </form>

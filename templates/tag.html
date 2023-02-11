@@ -14,7 +14,12 @@
             <div class="row align-items-start">
             
                 <div class="col">
-                    <h1>{{ tag.name }}</h1>                
+                    <h1>{{ tag.name }}</h1>     
+                    <ul>
+                        {% for post in tag.posts %}
+                        <li><a href="/{{ post.author.id }}/{{ post.id }}">{{ post.title }}</a></li>
+                        {% endfor %}
+                    </ul>           
                     
                     <form action="/edit_tag/{{tag.id}}">
                         <button type="submit" class="btn btn-primary">EDIT TAG</button>

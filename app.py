@@ -32,7 +32,8 @@ def show_user(user_id):
 def show_tag(tag_id):
     """Show tag"""
     tag = Tag.query.get_or_404(tag_id)
-    return render_template("tag.html", tag=tag)
+    posts = tag.posts
+    return render_template("tag.html", tag=tag, posts=posts)
 
 @app.route("/<int:user_id>/<int:post_id>")
 def show_post(user_id, post_id):
@@ -45,6 +46,11 @@ def show_post(user_id, post_id):
 @app.route("/<int:user_id>/delete_user", methods=["POST"])
 def delete_user(user_id):
     """delete user"""
+    user = User.query.get_or_404(user_id)
+    posts = user.posts
+    for post in posts:
+        post.tags = []
+        Post.query.filter_by(id=post.id).delete()
     User.query.filter_by(id=user_id).delete()
     db.session.commit()
     return redirect('/')
@@ -160,6 +166,7 @@ def delete_post(p_id):
     """delete post"""
     print('delete post'*10)
     post = Post.query.filter_by(id=p_id).first()
+    post.tags = []
     user_id = post.user_id
     print(user_id)
     Post.query.filter_by(id=p_id).delete()
@@ -174,14 +181,21 @@ def show_edit_post_form(p_id):
     """show edit post form"""
     post = Post.query.get_or_404(p_id)
     user = post.author
-    return render_template("edit_post.html", post=post, user=user)
+    tags = Tag.query.all()
+    return render_template("edit_post.html", post=post, user=user, tags=tags)
 
 @app.route('/<int:p_id>/edit_post', methods=["POST"])
 def edit_post(p_id):
     post = Post.query.get_or_404(p_id)
     post.title = request.form["title"]
     post.content = request.form["content"]
+    tag_ids = [int(num) for num in request.form.getlist("tags")]
+    for id in tag_ids:
+        print(id)
+    tags = Tag.query.filter(Tag.id.in_(tag_ids)).all()
+    post.tags = tags
     user_id = post.user_id
     db.session.add(post)
     db.session.commit()
     return redirect(f'/{user_id}/{p_id}')
+
